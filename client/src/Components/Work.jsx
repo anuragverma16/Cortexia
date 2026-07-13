@@ -194,7 +194,7 @@ const ProjectsShowcase = () => {
       categories: ["Web Development", "UI/UX Design", "SaaS"],
       status: "in-progress",
       date: "Jul 2026",
-      growth: "Building",
+      growth: "85% Complete",
       link: "/progress",
     },
     {

@@ -28,7 +28,7 @@ const BrandBoostSection = () => {
 
         {/* Image */}
         <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop"
+          src="brand.png"
           alt="Team collaboration"
           className={`w-full h-[400px] sm:h-[500px] object-cover transition-transform duration-700 ${
             isHovered ? "scale-110" : "scale-100"

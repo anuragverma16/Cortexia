@@ -23,7 +23,7 @@ const ProjectProgressPage = () => {
     client: "Savoria",
     startDate: "Jun 1, 2026",
     endDate: "July 30, 2026",
-    progress: 75,
+    progress: 85,
     status: "In Progress",
     projectManager: {
       name: "Anurag Verma",
@@ -75,8 +75,8 @@ const ProjectProgressPage = () => {
       description: "Phone verification, login OTP flow, and secure authentication",
       status: "in-progress",
       date: "Jul 25, 2026",
-      tasks: 8,
-      completedTasks: 0,
+      tasks: 6,
+      completedTasks: 3,
     },
     {
       id: 6,
@@ -84,7 +84,7 @@ const ProjectProgressPage = () => {
       description: "Online payments, gateway integration, and transaction tracking",
       status: "pending",
       date: "Jul 30, 2026",
-      tasks: 8,
+      tasks: 6,
       completedTasks: 0,
     },
   ];
@@ -103,9 +103,9 @@ const ProjectProgressPage = () => {
       type: "update",
     },
     {
-      date: "Jul 8, 2026",
-      title: "OTP System Development Started",
-      description: "Building phone verification and secure login OTP flows.",
+      date: "Jul 12, 2026",
+      title: "OTP System In Progress",
+      description: "Phone verification flow is 50% done — login OTP screens are built.",
       type: "update",
     },
     {
@@ -155,6 +155,8 @@ const ProjectProgressPage = () => {
   const completedMilestones = milestones.filter(
     (milestone) => milestone.status === "completed"
   ).length;
+  const calculatedProgress = Math.round((completedTasks / totalTasks) * 100);
+  const displayProgress = projectData.progress ?? calculatedProgress;
 
   // Auto deadline tracking based on today's date
   const DAY_MS = 24 * 60 * 60 * 1000;
@@ -166,7 +168,7 @@ const ProjectProgressPage = () => {
 
   const today = startOfDay(new Date());
   const deadline = startOfDay(projectData.endDate);
-  const isProjectComplete = projectData.progress >= 100;
+  const isProjectComplete = displayProgress >= 100;
 
   const daysUntilDeadline = Math.round((deadline - today) / DAY_MS);
   const isOverdue = !isProjectComplete && daysUntilDeadline < 0;
@@ -179,7 +181,7 @@ const ProjectProgressPage = () => {
   const stats = [
     {
       label: "Completion",
-      value: `${projectData.progress}%`,
+      value: `${displayProgress}%`,
       icon: Target,
       color: "bg-blue-100 text-blue-600",
     },
@@ -309,13 +311,13 @@ const ProjectProgressPage = () => {
                 Overall Progress
               </span>
               <span className="text-sm font-bold text-[#1a4d3c]">
-                {projectData.progress}%
+                {displayProgress}%
               </span>
             </div>
             <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#1a4d3c] to-[#2a5d4c] rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${projectData.progress}%` }}
+                style={{ width: `${displayProgress}%` }}
               />
             </div>
           </div>
