@@ -215,6 +215,7 @@ const ProjectProgressPage = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchParams, setSearchParams] = useSearchParams();
 
+<<<<<<< HEAD
   const projectParam = searchParams.get("project");
   const selectedProjectKey =
     projectParam && projectsProgressData[projectParam]
@@ -223,6 +224,106 @@ const ProjectProgressPage = () => {
 
   const { projectData, milestones, recentUpdates } =
     projectsProgressData[selectedProjectKey];
+=======
+  // Sample project data
+  const projectData = {
+    name: "Savoria SaaS",
+    client: "Savoria",
+    startDate: "Jun 1, 2026",
+    endDate: "August 30, 2026",
+    progress: 85,
+    status: "In Progress",
+    projectManager: {
+      name: "Anurag Verma",
+      avatar: "anurag.jpeg",
+    },
+  };
+
+  const milestones = [
+    {
+      id: 1,
+      title: "SaaS Platform Development",
+      description:
+        "Market research, feature planning, and multi-tenant system design",
+      status: "completed",
+      date: "Jun 15, 2026",
+      tasks: 10,
+      completedTasks: 10,
+    },
+    {
+      id: 2,
+      title: "UI/UX Design",
+      description: "Dashboard wireframes, design system, and prototype flows",
+      status: "completed",
+      date: "Jul 1, 2026",
+      tasks: 12,
+      completedTasks: 12,
+    },
+    {
+      id: 3,
+      title: "Core Platform Development",
+      description: "Tenant onboarding, menu management, and order workflows",
+      status: "completed",
+      date: "Jul 10, 2026",
+      tasks: 18,
+      completedTasks: 18,
+    },
+    {
+      id: 4,
+      title: "Analytics & Reporting",
+      description: "Sales insights, performance dashboards, and exports",
+      status: "completed",
+      date: "Jul 18, 2026",
+      tasks: 8,
+      completedTasks: 8,
+    },
+    {
+      id: 5,
+      title: "OTP System",
+      description: "Phone verification, login OTP flow, and secure authentication",
+      status: "in-progress",
+      date: "August 25, 2026",
+      tasks: 6,
+      completedTasks: 3,
+    },
+    {
+      id: 6,
+      title: "Payment System",
+      description: "Online payments, gateway integration, and transaction tracking",
+      status: "pending",
+      date: "August 30, 2026",
+      tasks: 6,
+      completedTasks: 0,
+    },
+  ];
+
+  const recentUpdates = [
+    {
+      date: "Jul 18, 2026",
+      title: "Analytics Module Completed",
+      description: "Restaurant sales dashboards and export reports are live.",
+      type: "milestone",
+    },
+    {
+      date: "Jul 12, 2026",
+      title: "Order Management Module Completed",
+      description: "Live order tracking and kitchen workflow views are done.",
+      type: "update",
+    },
+    {
+      date: "August 25, 2026",
+      title: "OTP System In Progress",
+      description: "Phone verification flow is 50% done — login OTP screens are built.",
+      type: "update",
+    },
+    {
+      date: "August 30, 2026",
+      title: "Design System Finalized",
+      description: "Savoria SaaS shared components and layouts approved.",
+      type: "document",
+    },
+  ];
+>>>>>>> 9fb60e594a3bc25d1e80050db05e2aeab1559d88
 
   // const deliverables = [
   //   {
