@@ -193,9 +193,21 @@ const ProjectsShowcase = () => {
       image: "savoria.png",
       categories: ["Web Development", "UI/UX Design", "SaaS"],
       status: "in-progress",
-      date: "Jul 2026",
+      date: "November 2026",
       growth: "85% Complete",
       link: "/progress",
+    },
+    {
+      id: 2,
+      title: "ClinicSaathi",
+      description:
+        "AI-powered operating system for modern clinics to manage appointments, digital queues, and patient records.",
+      image: "clinicsaathi.png",
+      categories: ["Web Development", "UI/UX Design", "SaaS"],
+      status: "in-progress",
+      date: "November 2026",
+      growth: "75% Complete",
+      link: "/progress?project=clinicsaathi",
     },
     {
       id: 1,

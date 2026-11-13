@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import {
   CheckCircle,
   Circle,
@@ -14,107 +15,214 @@ import {
   Award,
 } from "lucide-react";
 
+const projectsProgressData = {
+  savoria: {
+    projectData: {
+      name: "Savoria SaaS",
+      client: "Savoria",
+      startDate: "Jun 1, 2026",
+      endDate: "November 30, 2026",
+      progress: 85,
+      status: "In Progress",
+      projectManager: {
+        name: "Anurag Verma",
+        avatar: "anurag.jpeg",
+      },
+    },
+    milestones: [
+      {
+        id: 1,
+        title: "SaaS Platform Development",
+        description:
+          "Market research, feature planning, and multi-tenant system design",
+        status: "completed",
+        date: "Jun 15, 2026",
+        tasks: 10,
+        completedTasks: 10,
+      },
+      {
+        id: 2,
+        title: "UI/UX Design",
+        description: "Dashboard wireframes, design system, and prototype flows",
+        status: "completed",
+        date: "Jul 1, 2026",
+        tasks: 12,
+        completedTasks: 12,
+      },
+      {
+        id: 3,
+        title: "Core Platform Development",
+        description: "Tenant onboarding, menu management, and order workflows",
+        status: "completed",
+        date: "Jul 10, 2026",
+        tasks: 18,
+        completedTasks: 18,
+      },
+      {
+        id: 4,
+        title: "Analytics & Reporting",
+        description: "Sales insights, performance dashboards, and exports",
+        status: "completed",
+        date: "Jul 18, 2026",
+        tasks: 8,
+        completedTasks: 8,
+      },
+      {
+        id: 5,
+        title: "OTP System",
+        description: "Phone verification, login OTP flow, and secure authentication",
+        status: "in-progress",
+        date: "November 20, 2026",
+        tasks: 6,
+        completedTasks: 3,
+      },
+      {
+        id: 6,
+        title: "Payment System",
+        description: "Online payments, gateway integration, and transaction tracking",
+        status: "pending",
+        date: "November 25, 2026",
+        tasks: 6,
+        completedTasks: 0,
+      },
+    ],
+    recentUpdates: [
+      {
+        date: "Jul 18, 2026",
+        title: "Analytics Module Completed",
+        description: "Restaurant sales dashboards and export reports are live.",
+        type: "milestone",
+      },
+      {
+        date: "Jul 12, 2026",
+        title: "Order Management Module Completed",
+        description: "Live order tracking and kitchen workflow views are done.",
+        type: "update",
+      },
+      {
+        date: "Jul 12, 2026",
+        title: "OTP System In Progress",
+        description: "Phone verification flow is 50% done — login OTP screens are built.",
+        type: "update",
+      },
+      {
+        date: "Jul 1, 2026",
+        title: "Design System Finalized",
+        description: "Savoria SaaS shared components and layouts approved.",
+        type: "document",
+      },
+    ],
+  },
+  clinicsaathi: {
+    projectData: {
+      name: "ClinicSaathi",
+      client: "ClinicSaathi Health",
+      startDate: "Jul 15, 2026",
+      endDate: "December 20, 2026",
+      progress: 75,
+      status: "In Progress",
+      projectManager: {
+        name: "Anurag Verma",
+        avatar: "anurag.jpeg",
+      },
+    },
+    milestones: [
+      {
+        id: 1,
+        title: "System Architecture & Security",
+        description: "Encrypted patient database schema, role-based access, and compliance",
+        status: "completed",
+        date: "Aug 5, 2026",
+        tasks: 10,
+        completedTasks: 10,
+      },
+      {
+        id: 2,
+        title: "UI/UX Design System",
+        description: "Doctor dashboard, queue display interface, and mobile patient portal prototype",
+        status: "completed",
+        date: "Aug 25, 2026",
+        tasks: 14,
+        completedTasks: 14,
+      },
+      {
+        id: 3,
+        title: "Patient CRM & Appointments",
+        description: "Online slot booking, doctor availability calendar, and patient history records",
+        status: "completed",
+        date: "Sep 20, 2026",
+        tasks: 16,
+        completedTasks: 16,
+      },
+      {
+        id: 4,
+        title: "Digital Queue & Live Token System",
+        description: "Real-time token management, wait-time estimation, and waiting room display screen",
+        status: "completed",
+        date: "Oct 15, 2026",
+        tasks: 12,
+        completedTasks: 12,
+      },
+      {
+        id: 5,
+        title: "WhatsApp Automation & Prescriptions",
+        description: "Automated booking alerts, digital prescription sharing, and reminder messages",
+        status: "in-progress",
+        date: "November 25, 2026",
+        tasks: 8,
+        completedTasks: 5,
+      },
+      {
+        id: 6,
+        title: "Billing, Payments & Advanced Analytics",
+        description: "Invoicing, payment gateway integration, clinic revenue reports, and doctor performance",
+        status: "pending",
+        date: "December 10, 2026",
+        tasks: 8,
+        completedTasks: 0,
+      },
+    ],
+    recentUpdates: [
+      {
+        date: "Oct 28, 2026",
+        title: "Digital Queue System Deployed",
+        description: "Live waiting room screen with token call-outs is fully operational.",
+        type: "milestone",
+      },
+      {
+        date: "Oct 20, 2026",
+        title: "WhatsApp Alerts Integration Started",
+        description: "Connecting WhatsApp Business API for appointment reminders and digital receipts.",
+        type: "update",
+      },
+      {
+        date: "Oct 10, 2026",
+        title: "Patient CRM Tested",
+        description: "Doctor consultation records and patient history workflows passed QA.",
+        type: "update",
+      },
+      {
+        date: "Sep 15, 2026",
+        title: "Clinic Dashboard Approved",
+        description: "Design and flow approved for reception desk and doctor consultation views.",
+        type: "document",
+      },
+    ],
+  },
+};
+
 const ProjectProgressPage = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Sample project data
-  const projectData = {
-    name: "Savoria SaaS",
-    client: "Savoria",
-    startDate: "Jun 1, 2026",
-    endDate: "July 30, 2026",
-    progress: 85,
-    status: "In Progress",
-    projectManager: {
-      name: "Anurag Verma",
-      avatar: "anurag.jpeg",
-    },
-  };
+  const projectParam = searchParams.get("project");
+  const selectedProjectKey =
+    projectParam && projectsProgressData[projectParam]
+      ? projectParam
+      : "savoria";
 
-  const milestones = [
-    {
-      id: 1,
-      title: "SaaS Platform Development",
-      description:
-        "Market research, feature planning, and multi-tenant system design",
-      status: "completed",
-      date: "Jun 15, 2026",
-      tasks: 10,
-      completedTasks: 10,
-    },
-    {
-      id: 2,
-      title: "UI/UX Design",
-      description: "Dashboard wireframes, design system, and prototype flows",
-      status: "completed",
-      date: "Jul 1, 2026",
-      tasks: 12,
-      completedTasks: 12,
-    },
-    {
-      id: 3,
-      title: "Core Platform Development",
-      description: "Tenant onboarding, menu management, and order workflows",
-      status: "completed",
-      date: "Jul 10, 2026",
-      tasks: 18,
-      completedTasks: 18,
-    },
-    {
-      id: 4,
-      title: "Analytics & Reporting",
-      description: "Sales insights, performance dashboards, and exports",
-      status: "completed",
-      date: "Jul 18, 2026",
-      tasks: 8,
-      completedTasks: 8,
-    },
-    {
-      id: 5,
-      title: "OTP System",
-      description: "Phone verification, login OTP flow, and secure authentication",
-      status: "in-progress",
-      date: "Jul 25, 2026",
-      tasks: 6,
-      completedTasks: 3,
-    },
-    {
-      id: 6,
-      title: "Payment System",
-      description: "Online payments, gateway integration, and transaction tracking",
-      status: "pending",
-      date: "Jul 30, 2026",
-      tasks: 6,
-      completedTasks: 0,
-    },
-  ];
-
-  const recentUpdates = [
-    {
-      date: "Jul 18, 2026",
-      title: "Analytics Module Completed",
-      description: "Restaurant sales dashboards and export reports are live.",
-      type: "milestone",
-    },
-    {
-      date: "Jul 12, 2026",
-      title: "Order Management Module Completed",
-      description: "Live order tracking and kitchen workflow views are done.",
-      type: "update",
-    },
-    {
-      date: "Jul 12, 2026",
-      title: "OTP System In Progress",
-      description: "Phone verification flow is 50% done — login OTP screens are built.",
-      type: "update",
-    },
-    {
-      date: "Jul 1, 2026",
-      title: "Design System Finalized",
-      description: "Savoria SaaS shared components and layouts approved.",
-      type: "document",
-    },
-  ];
+  const { projectData, milestones, recentUpdates } =
+    projectsProgressData[selectedProjectKey];
 
   // const deliverables = [
   //   {
@@ -243,10 +351,44 @@ const ProjectProgressPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-[#f5f1e8] to-[#e8e4d8]">
       {/* Header */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <img src="logo1.png" alt="" className="h-15" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <Link to="/" className="flex items-center space-x-3">
+              <img src="logo1.png" alt="Logo" className="h-12 sm:h-15" />
+            </Link>
+
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 bg-gray-100 p-1.5 rounded-full">
+                <button
+                  type="button"
+                  onClick={() => setSearchParams({ project: "savoria" })}
+                  className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition ${
+                    selectedProjectKey === "savoria"
+                      ? "bg-[#1a4d3c] text-white shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  Savoria SaaS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSearchParams({ project: "clinicsaathi" })}
+                  className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition ${
+                    selectedProjectKey === "clinicsaathi"
+                      ? "bg-[#1a4d3c] text-white shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  ClinicSaathi
+                </button>
+              </div>
+
+              <Link
+                to="/"
+                className="text-sm font-medium text-[#1a4d3c] hover:underline hidden md:inline-block ml-2"
+              >
+                ← Back to Home
+              </Link>
             </div>
           </div>
         </div>
